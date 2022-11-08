@@ -1,0 +1,19 @@
+button {
+    width: 25px;
+}
+
+.operator {
+    background-color: rgb(198, 128, 216);
+}
+
+.equal {
+    background-color: coral;
+}
+
+.clear {
+    background-color: rgb(245, 82, 82);
+}
+
+.expression {
+    margin-top: 25px;
+}
