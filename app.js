@@ -20,10 +20,19 @@ const operate = function (a, b, op) {
 };
 
 // intialize
+let operatorBtns = document.querySelectorAll(".operator");
 let expression = document.getElementById("expression");
 let firstNum,
   secondNum = 0;
 let operation = "";
+
+const buttonsOn = function () {
+  // re-enable operator buttons
+  for (btn of operatorBtns) {
+    btn.className = "operator";
+    btn.disabled = false;
+  }
+};
 
 // construct and display the expression to evaluate
 const display = function (value) {
@@ -33,6 +42,7 @@ const display = function (value) {
     firstNum = 0;
     secondNum = 0;
     operation = "";
+    buttonsOn();
   } else if (value == "=") {
     // avoid bug
     if (operation == "-" && firstNum < 0) {
@@ -59,10 +69,17 @@ const display = function (value) {
     }
     // calculate and display result
     expression.textContent = operate(firstNum, secondNum, operation);
+    buttonsOn();
   } else {
+    // build expression
     if (value == "+" || value == "-" || value == "*" || value == "/") {
       firstNum = +expression.textContent; // + to convert to number
       operation = value;
+      // disable operator buttons
+      for (btn of operatorBtns) {
+        btn.className = "off";
+        btn.disabled = true;
+      }
     }
     expression.textContent += value;
   }
