@@ -15,17 +15,57 @@ const divide = function (a, b) {
 };
 
 // execute any operation
-const operate = function (a, b, operation) {
-  return operation(a, b);
+const operate = function (a, b, op) {
+  return op(a, b);
 };
+
+// intialize
+let expression = document.getElementById("expression");
+let firstNum,
+  secondNum = 0;
+let operation = "";
 
 // construct and display the expression to evaluate
 const display = function (value) {
-  let expression = document.getElementById("expression");
-
+  // reset button
   if (value == "c") {
     expression.textContent = "";
-  } else expression.textContent += value;
+    firstNum = 0;
+    secondNum = 0;
+    operation = "";
+  } else if (value == "=") {
+    // avoid bug
+    if (operation == "-" && firstNum < 0) {
+      secondNum = expression.textContent.substring(1); // remove first "-"
+      secondNum = +secondNum.substring(secondNum.indexOf("-") + 1); // + to convert to number
+    } else {
+      secondNum = +expression.textContent.substring(
+        expression.textContent.indexOf(operation) + 1
+      ); // + to convert to number
+    }
+    switch (operation) {
+      case "+":
+        operation = add;
+        break;
+      case "-":
+        operation = subtract;
+        break;
+      case "*":
+        operation = multiply;
+        break;
+      case "/":
+        operation = divide;
+        break;
+    }
+    // calculate and display result
+    expression.textContent = operate(firstNum, secondNum, operation);
+  } else {
+    if (value == "+" || value == "-" || value == "*" || value == "/") {
+      firstNum = +expression.textContent; // + to convert to number
+      operation = value;
+    }
+    expression.textContent += value;
+  }
 };
 
 // click on buttons to display their value
