@@ -22,7 +22,10 @@ const operate = function (a, b, operation) {
 // construct and display the expression to evaluate
 const display = function (value) {
   let expression = document.getElementById("expression");
-  expression.textContent += value;
+
+  if (value == "c") {
+    expression.textContent = "";
+  } else expression.textContent += value;
 };
 
 // click on buttons to display their value
